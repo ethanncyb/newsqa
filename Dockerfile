@@ -1,6 +1,7 @@
 FROM continuumio/miniconda:4.5.11
 
 # Install JDK.
+RUN echo "deb http://archive.debian.org/debian stretch main" > /etc/apt/sources.list
 RUN apt-get update && apt-get install --yes default-jdk
 
 RUN echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc

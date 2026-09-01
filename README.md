@@ -136,7 +136,12 @@ docker run --rm -it -v ${PWD}:/usr/src/newsqa --name newsqa maluuba/newsqa /bin/
 The warnings from the tokenizer are normal.
 
 #### Troubleshooting Docker Set Up
+
 If you run into issues such as the tokenization not unpacking, then you may need to give Docker at least 4GB of memory.
+
+##### Docker build fails on `apt-get install`
+
+The base image uses Debian Stretch, whose package repositories have moved to the archive. If `docker build` fails during `apt-get update` with 404 errors on `deb.debian.org` or `security.debian.org`, this is the cause. The Dockerfile now points apt at `archive.debian.org` before running `apt-get update`. See [issue #44](https://github.com/Maluuba/newsqa/issues/44).
 
 ### Manual Set Up
 * Clone this repo.
