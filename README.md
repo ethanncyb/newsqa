@@ -143,6 +143,18 @@ If you run into issues such as the tokenization not unpacking, then you may need
 
 The base image uses Debian Stretch, whose package repositories have moved to the archive. If `docker build` fails during `apt-get update` with 404 errors on `deb.debian.org` or `security.debian.org`, this is the cause. The Dockerfile now points apt at `archive.debian.org` before running `apt-get update`. See [issue #44](https://github.com/Maluuba/newsqa/issues/44).
 
+##### NewsQA dataset missing after `docker run`
+
+The default container command cleans up generated output files before running tests. An older version of the Dockerfile used a glob (`maluuba/newsqa/newsqa-data-*.csv`) that also matched the downloaded input file `newsqa-data-v1.csv`, deleting it before tests could run. The Dockerfile now only removes generated tokenized output (`newsqa-data-tokenized-*.csv`).
+
+If you are using an older image, override the default command so the downloaded dataset is not deleted:
+
+```bash
+docker run --rm -it -v ${PWD}:/usr/src/newsqa --name newsqa maluuba/newsqa /bin/bash --login -c "cp --no-clobber /usr/downloads/* maluuba/newsqa/ && python -m unittest discover ."
+```
+
+See [issue #30](https://github.com/Maluuba/newsqa/issues/30).
+
 ### Manual Set Up
 * Clone this repo.
 * Download the tar.gz file for the questions and answers from [here][maluuba_newsqa_dl] to the maluuba/newsqa folder. No need to extract anything.

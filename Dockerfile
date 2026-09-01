@@ -17,6 +17,6 @@ ADD https://nlp.stanford.edu/software/stanford-postagger-2015-12-09.zip /usr/dow
 
 # Clean up existing files (there can be problems if they've already been extracted outside of the Docker container).
 # Run the unit tests to test and extract the data.
-CMD /bin/bash --login -c "rm --force combined-newsqa-data-*.csv maluuba/newsqa/newsqa-data-*.csv && \
+CMD /bin/bash --login -c "rm --force combined-newsqa-data-*.csv maluuba/newsqa/newsqa-data-tokenized-*.csv && \
                           cp --no-clobber /usr/downloads/* maluuba/newsqa/ && \
                           python -m unittest discover ."
